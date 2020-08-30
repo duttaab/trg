@@ -23,6 +23,9 @@
 3. *Exception Handler*
    - *A global execption handler for API/MAP message processing.*
    
+ ##### Sample Outputs
+ *Project folder 'postman' contains screen shots of HTTP requests for both the MAP messages*
+ 
 
  
 
