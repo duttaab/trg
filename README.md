@@ -1,7 +1,7 @@
-                                        **Project Name: Map Services** 
+# trg
+                    **Project Name: Map Services** 
 ##### Project Description: 
-*A RESTful WebService which accepts GSM MAP parameters (JSON format) as request and converts into corresponding ASN.1 encoded bytes. 
-As proof of concept the following MAP messages are used.*
+*A RESTful WebService which accepts GSM MAP parameters (JSON format) as request and converts into corresponding ASN.1 encoded bytes. As proof of concept the following MAP messages are used.*
 1. *MAP-ALERT-SERVICE-CENTRE*
 2. *MAP-READY-FOR-SM*
 
@@ -23,3 +23,10 @@ As proof of concept the following MAP messages are used.*
 3. *Exception Handler*
    - *A global execption handler for API/MAP message processing.*
    
+
+ 
+
+
+
+
+
