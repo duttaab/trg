@@ -37,10 +37,8 @@
  ##### Sample Outputs
  *Project folder 'postman' contains screen shots of HTTP requests for both the MAP messages*
  
- 
+ ##### Setup & Installation
+ 1. Import the Maven project and run  mvn install
+ 2. Use either Postman/Curl command to test the end points 
 
  
-
-
-
-
