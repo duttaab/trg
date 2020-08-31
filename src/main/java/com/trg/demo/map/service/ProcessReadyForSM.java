@@ -9,33 +9,49 @@
 
 package com.trg.demo.map.service;
 
+import java.util.TreeMap;
+
 import org.mobicents.protocols.asn.AsnOutputStream;
 import org.restcomm.protocols.ss7.map.api.MAPException;
 import org.restcomm.protocols.ss7.map.api.primitives.IMSI;
 import org.restcomm.protocols.ss7.map.api.service.sms.AlertReason;
 import org.restcomm.protocols.ss7.map.primitives.IMSIImpl;
 import org.restcomm.protocols.ss7.map.service.sms.ReadyForSMRequestImpl;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import com.trg.demo.map.apierror.MapMessageException;
+import com.trg.demo.map.dao.MapStatsDao;
+import com.trg.demo.map.dao.MapStatsDao.MapMessageId;
 import com.trg.demo.map.model.MapModel;
 import com.trg.demo.map.model.MapModelReadyForSM;
+import com.trg.demo.map.model.MapStatsModel;
 
 
 @Service 
 public class ProcessReadyForSM extends ProcessMapMessage{
 
 	private MapModelReadyForSM param;
+	private final MapStatsDao mapDao;
 	
-	@Override
+	@Autowired
+	public ProcessReadyForSM(@Qualifier("MemDB") MapStatsDao mapDao) {
+		this.mapDao = mapDao;
+	}
+	
 	public void validateMapParameter(MapModel param) throws MapMessageException {
 		
 		MapModelReadyForSM temp = (MapModelReadyForSM) param;
 		
 		if (temp.getAlertReason() == null) {
+			mapDao.setError();
+			mapDao.updateStats(MapMessageId.MAPREADYFORSM);
 			throw new MapMessageException("Parameter Alert Reason missing");
 		}
 		
 		if (temp.getAlertReason().length() != 1) {
+			mapDao.setError();
+			mapDao.updateStats(MapMessageId.MAPREADYFORSM);
 			throw new MapMessageException("Parameter Alert Reason length invalid");
 		}
 		
@@ -48,18 +64,21 @@ public class ProcessReadyForSM extends ProcessMapMessage{
 		
 		if (!temp.getAlertReason().equals(str1)  &&
 				!temp.getAlertReason().equals(str2)) {
+			mapDao.setError();
+			mapDao.updateStats(MapMessageId.MAPREADYFORSM);
 			throw new MapMessageException("Parameter Alert Reason incorrect code");
 		}
 		
 		if (temp.getImsi() == null || temp.getImsi().isEmpty()) {
+			mapDao.setError();
+			mapDao.updateStats(MapMessageId.MAPREADYFORSM);
 			throw new MapMessageException("Parameter IMSI missing");
 		}
 		
 		this.param = temp;
 	}
 
-	@Override
-	public void encode() throws Exception {
+	public void encode() throws MapMessageException {
 		
 		IMSI imsi = new IMSIImpl(param.getImsi());
         
@@ -76,17 +95,30 @@ public class ProcessReadyForSM extends ProcessMapMessage{
         		                                               false);
         AsnOutputStream asnOS = new AsnOutputStream();
 
-        impl.encodeAll(asnOS);
+        try {
+			impl.encodeAll(asnOS);
+		} catch (MAPException e) {
+			
+			mapDao.setError();
+			mapDao.updateStats(MapMessageId.MAPREADYFORSM);
+			
+			throw new MapMessageException("MAP encoding failed");
+		}
 
         byte[] encodedData = asnOS.toByteArray();
         
         param.setEncodedData(super.bytesToHex(encodedData));
+        
+		mapDao.setSuccess();
+		mapDao.updateStats(MapMessageId.MAPREADYFORSM);
 	}
 
-	@Override
 	public void decoder() throws Exception {
 		// TODO Auto-generated method stub
-		
 	}
-
+	
+	public TreeMap<String, MapStatsModel>  getStats() {
+		
+		return mapDao.getStats();
+	}
 }

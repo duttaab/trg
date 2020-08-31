@@ -24,7 +24,7 @@ public abstract class ProcessMapMessage {
 	
 	/** Function to decode MAP message Uses jSS7 library function. 
 	 * * @throws Exception **/
-	abstract void  decoder() throws Exception;;
+	abstract void  decoder() throws Exception;
 	
 	static final char[] HEX_ARRAY = "0123456789ABCDEF".toCharArray();
 	

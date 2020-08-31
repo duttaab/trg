@@ -11,7 +11,6 @@
 package com.trg.demo.map.apierror;
 
 import java.time.LocalDateTime;
-import java.util.Date;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 public class CustomMessageHandler {

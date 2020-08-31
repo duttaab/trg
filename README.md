@@ -5,7 +5,7 @@
 1. *MAP-ALERT-SERVICE-CENTRE*
 2. *MAP-READY-FOR-SM*
 
-##### Technologys/Tools Used:
+##### Technology/Tools Used:
 1. *Spring Boot (https://spring.io/guides/gs/spring-boot/)*
 2. *Maven (https://maven.apache.org/)*
 3. *Eclipse IDE (https://www.eclipse.org/)*
@@ -15,16 +15,25 @@
 ##### Design Principle
 *Based on design principle separation of concerns (SoC) the MVC pattern is used to break up the application into:*
 1. *API/Controller layer*
-   - *Provides the endpoint for the REST requests and frames the response.*
+   - *Provides the endpoints for the REST requests and frames the response.*
 2. *Service layer*
    - *MAP request validation and processing.*
 3. *Data Model layer*
    - *Container for MAP parameters.*
-3. *Exception Handler*
-   - *A global execption handler for API/MAP message processing.*
+   - *MAP Statistics*
+4. *Data Access Object Pattern*
+   - *Interfaces for in-memory storage of request statistics*
+5. *Exception Handler*
+   - *A global exception handler for API/MAP message processing.*
    
+ ##### Endpoint URL 
+ *To generate encoded bytes for MAP-ALERT-SERVICE-CENTRE - POST /localhost:8080/map/alertservice/v3*
+ *To generate encoded bytes for MAP-READY-FOR-SM - POST /localhost:8080/map/readyforsm/v3*
+ *To get statistics - GET /localhost:8080/map/stats/v3*
+
  ##### Sample Outputs
  *Project folder 'postman' contains screen shots of HTTP requests for both the MAP messages*
+ 
  
 
  
