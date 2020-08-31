@@ -27,9 +27,12 @@
    - *A global exception handler for API/MAP message processing.*
    
  ##### Endpoint URL 
- *To generate encoded bytes for MAP-ALERT-SERVICE-CENTRE - POST /localhost:8080/map/alertservice/v3*
- *To generate encoded bytes for MAP-READY-FOR-SM - POST /localhost:8080/map/readyforsm/v3*
- *To get statistics - GET /localhost:8080/map/stats/v3*
+ 1.  *To generate encoded bytes for MAP-ALERT-SERVICE-CENTRE - 
+    POST /localhost:8080/map/alertservice/v3*
+ 2.  *To generate encoded bytes for MAP-READY-FOR-SM - 
+     POST /localhost:8080/map/readyforsm/v3*
+ 3.  *To get statistics - 
+    GET /localhost:8080/map/stats/v3*
 
  ##### Sample Outputs
  *Project folder 'postman' contains screen shots of HTTP requests for both the MAP messages*
@@ -37,7 +40,6 @@
  
 
  
-
 
 
 
