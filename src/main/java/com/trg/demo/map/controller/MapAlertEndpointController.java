@@ -40,8 +40,7 @@ public class MapAlertEndpointController {
 	@ResponseBody
 	public MapModelAlertServiceCentre process(@RequestBody MapModelAlertServiceCentre params) {
 		try {
-			this.alertService.validateMapParameter(params);
-			this.alertService.encode();
+			this.alertService.processMapParameter(params);
 		}
 		catch (MapMessageException ex) {
 			throw new RestApiExceptionHandler(ex.getMessage(), HttpStatus.BAD_REQUEST);

@@ -16,15 +16,7 @@ import com.trg.demo.map.model.MapModel;
 public abstract class ProcessMapMessage {
 
 	/** Function to check the sanity of the MAP parameters */
-	abstract void validateMapParameter(MapModel m) throws MapMessageException;
-	
-	/** Function to encode MAP message. Uses jSS7 library function. 
-	 * @throws Exception **/
-	abstract void encode()  throws Exception;
-	
-	/** Function to decode MAP message Uses jSS7 library function. 
-	 * * @throws Exception **/
-	abstract void  decoder() throws Exception;
+	abstract void processMapParameter(MapModel m) throws MapMessageException;
 	
 	static final char[] HEX_ARRAY = "0123456789ABCDEF".toCharArray();
 	

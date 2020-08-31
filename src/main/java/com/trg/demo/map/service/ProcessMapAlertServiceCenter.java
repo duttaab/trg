@@ -33,7 +33,6 @@ import com.trg.demo.map.model.MapStatsModel;
 @Service 
 public class ProcessMapAlertServiceCenter extends ProcessMapMessage {
 	
-	private MapModelAlertServiceCentre param;
 	private final MapStatsDao mapDao;
 	
 	@Autowired
@@ -41,7 +40,7 @@ public class ProcessMapAlertServiceCenter extends ProcessMapMessage {
 		this.mapDao = mapDao;
 	}
 	
-	public void validateMapParameter(MapModel param) throws MapMessageException {
+	public synchronized void processMapParameter(MapModel param) throws MapMessageException {
 		
 		MapModelAlertServiceCentre tmp = (MapModelAlertServiceCentre)param;
 				
@@ -58,21 +57,22 @@ public class ProcessMapAlertServiceCenter extends ProcessMapMessage {
 			throw new MapMessageException("Parameter Service Center Address missing");
 		}
 		
-		this.param = tmp;
+		encode(tmp);
 	}
 	
-	@Override
-	public void encode() throws MapMessageException {
+	/** Function to encode MAP message. Uses jSS7 library function. 
+	 * @throws Exception **/
+	public void encode(MapModelAlertServiceCentre param) throws MapMessageException {
 		
 		AddressString sca = 
         		new AddressStringImpl(AddressNature.international_number, 
         		            NumberingPlan.ISDN, 
-        		            this.param.getSca());
+        		            param.getSca());
         
 		ISDNAddressString msisdn = 
         		new ISDNAddressStringImpl(AddressNature.international_number, 
         				NumberingPlan.ISDN,
-                        this.param.getMsisdn());
+                        param.getMsisdn());
         
         AlertServiceCentreRequestImpl asc = 
         		new AlertServiceCentreRequestImpl(msisdn, sca);
@@ -92,12 +92,7 @@ public class ProcessMapAlertServiceCenter extends ProcessMapMessage {
         
         mapDao.setSuccess();
         mapDao.updateStats(MapMessageId.MAPALERTSERVICECENTRE);
-  }
-
-	@Override
-	public void decoder() throws Exception {
-		// TODO Auto-generated method stub
-	}
+   }
 	
 	public TreeMap<String, MapStatsModel>  getStats() {
 		return mapDao.getStats();

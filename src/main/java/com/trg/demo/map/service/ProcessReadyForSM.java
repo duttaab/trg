@@ -31,7 +31,6 @@ import com.trg.demo.map.model.MapStatsModel;
 @Service 
 public class ProcessReadyForSM extends ProcessMapMessage{
 
-	private MapModelReadyForSM param;
 	private final MapStatsDao mapDao;
 	
 	@Autowired
@@ -39,7 +38,7 @@ public class ProcessReadyForSM extends ProcessMapMessage{
 		this.mapDao = mapDao;
 	}
 	
-	public void validateMapParameter(MapModel param) throws MapMessageException {
+	public synchronized void processMapParameter(MapModel param) throws MapMessageException {
 		
 		MapModelReadyForSM temp = (MapModelReadyForSM) param;
 		
@@ -75,10 +74,10 @@ public class ProcessReadyForSM extends ProcessMapMessage{
 			throw new MapMessageException("Parameter IMSI missing");
 		}
 		
-		this.param = temp;
+		encode(temp);
 	}
 
-	public void encode() throws MapMessageException {
+	public void encode(MapModelReadyForSM param) throws MapMessageException {
 		
 		IMSI imsi = new IMSIImpl(param.getImsi());
         
@@ -113,9 +112,6 @@ public class ProcessReadyForSM extends ProcessMapMessage{
 		mapDao.updateStats(MapMessageId.MAPREADYFORSM);
 	}
 
-	public void decoder() throws Exception {
-		// TODO Auto-generated method stub
-	}
 	
 	public TreeMap<String, MapStatsModel>  getStats() {
 		

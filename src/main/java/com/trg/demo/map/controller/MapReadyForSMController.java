@@ -40,8 +40,7 @@ public class MapReadyForSMController {
 	@ResponseBody
 	public MapModelReadyForSM process(@RequestBody MapModelReadyForSM params) {
 		try {
-			this.readyService.validateMapParameter(params);
-			this.readyService.encode();
+			this.readyService.processMapParameter(params);
 		}
 		catch (MapMessageException ex) {
 			throw new RestApiExceptionHandler(ex.getMessage(), HttpStatus.BAD_REQUEST);
