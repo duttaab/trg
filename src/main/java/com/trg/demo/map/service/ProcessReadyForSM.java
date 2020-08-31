@@ -76,7 +76,9 @@ public class ProcessReadyForSM extends ProcessMapMessage{
 		
 		encode(temp);
 	}
-
+	
+	/** Function to encode MAP message. Uses jSS7 library function. 
+	 * @throws Exception **/
 	public void encode(MapModelReadyForSM param) throws MapMessageException {
 		
 		IMSI imsi = new IMSIImpl(param.getImsi());
