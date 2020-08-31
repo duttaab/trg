@@ -32,8 +32,8 @@ public class MapReadyForSMController {
 	private final ProcessReadyForSM readyService;
 	
 	@Autowired 
-	public MapReadyForSMController(ProcessReadyForSM alertService) {
-		this.readyService = alertService;
+	public MapReadyForSMController(ProcessReadyForSM readyService) {
+		this.readyService = readyService;
 	}
 	
 	@PostMapping
