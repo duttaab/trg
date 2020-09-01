@@ -18,16 +18,16 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.trg.demo.map.model.MapStatsModel;
-import com.trg.demo.map.service.ProcessReadyForSM;
+import com.trg.demo.map.service.ProcessStatsService;
 
 @RequestMapping("map/stats/v3")
 @RestController
 public class MapStatsController {
 	
-	private final ProcessReadyForSM service;
+	private final ProcessStatsService service;
 	
 	@Autowired 
-	public MapStatsController(ProcessReadyForSM service) {
+	public MapStatsController(ProcessStatsService service) {
 		this.service = service;
 	}
 	

@@ -9,8 +9,6 @@
 
 package com.trg.demo.map.service;
 
-import java.util.TreeMap;
-
 import org.mobicents.protocols.asn.AsnOutputStream;
 import org.restcomm.protocols.ss7.map.api.MAPException;
 import org.restcomm.protocols.ss7.map.api.primitives.IMSI;
@@ -25,7 +23,6 @@ import com.trg.demo.map.dao.MapStatsDao;
 import com.trg.demo.map.dao.MapStatsDao.MapMessageId;
 import com.trg.demo.map.model.MapModel;
 import com.trg.demo.map.model.MapModelReadyForSM;
-import com.trg.demo.map.model.MapStatsModel;
 
 
 @Service 
@@ -79,7 +76,7 @@ public class ProcessReadyForSM extends ProcessMapMessage{
 	
 	/** Function to encode MAP message. Uses jSS7 library function. 
 	 * @throws Exception **/
-	public void encode(MapModelReadyForSM param) throws MapMessageException {
+	private void encode(MapModelReadyForSM param) throws MapMessageException {
 		
 		IMSI imsi = new IMSIImpl(param.getImsi());
         
@@ -112,11 +109,5 @@ public class ProcessReadyForSM extends ProcessMapMessage{
         
 		mapDao.setSuccess();
 		mapDao.updateStats(MapMessageId.MAPREADYFORSM);
-	}
-
-	
-	public TreeMap<String, MapStatsModel>  getStats() {
-		
-		return mapDao.getStats();
 	}
 }
